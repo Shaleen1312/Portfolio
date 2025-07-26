@@ -1,26 +1,53 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer base {
+  body {
+    @apply antialiased bg-background-light dark:bg-background-dark text-text-primary-light dark:text-text-primary-dark;
+  }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-text-primary-light dark:text-text-primary-dark;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-secondary-light via-accent-light to-secondary-light dark:from-secondary-dark dark:via-accent-dark dark:to-secondary-dark animate-gradient bg-300%;
+  }
+
+  .nav-link {
+    @apply relative px-4 py-2 text-text-secondary-light dark:text-text-secondary-dark hover:text-secondary-light dark:hover:text-secondary-dark transition-colors duration-200;
+  }
+
+  .nav-link::after {
+    @apply content-[''] absolute left-0 bottom-0 w-0 h-0.5 bg-secondary-light dark:bg-secondary-dark transition-all duration-300;
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+
+  .button {
+    @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105;
+  }
+
+  .button-primary {
+    @apply button bg-secondary-light dark:bg-secondary-dark text-white hover:opacity-90;
+  }
+
+  .button-outline {
+    @apply button border-2 border-secondary-light dark:border-secondary-dark text-secondary-light dark:text-secondary-dark hover:bg-secondary-light dark:hover:bg-secondary-dark hover:text-white;
+  }
+
+  .card {
+    @apply bg-surface-light dark:bg-surface-dark rounded-xl shadow-lg p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl;
+  }
+}
+
+@layer utilities {
+  .bg-300\% {
+    background-size: 300% 300%;
+  }
 }
