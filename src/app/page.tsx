@@ -172,12 +172,20 @@ export default function Home() {
                 <a href="#projects" className="button-outline">View Projects</a>
               </div>
               <div className="flex space-x-6 mt-8">
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" 
-                   className="text-text-secondary-light dark:text-text-secondary-dark hover:text-secondary-light dark:hover:text-secondary-dark transition-colors">
+                <a href="https://github.com/Shaleen1312" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   className="text-text-secondary-light dark:text-text-secondary-dark hover:text-secondary-light dark:hover:text-secondary-dark transition-colors"
+                   aria-label="Visit my GitHub profile"
+                >
                   <FaGithub className="w-6 h-6" />
                 </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-                   className="text-text-secondary-light dark:text-text-secondary-dark hover:text-secondary-light dark:hover:text-secondary-dark transition-colors">
+                <a href="https://www.linkedin.com/feed/"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   className="text-text-secondary-light dark:text-text-secondary-dark hover:text-secondary-light dark:hover:text-secondary-dark transition-colors"
+                   aria-label="Visit my LinkedIn profile"
+                >
                   <FaLinkedin className="w-6 h-6" />
                 </a>
                 <a href="mailto:schhabra50_be23@thapar.edu"
@@ -341,18 +349,20 @@ export default function Home() {
             <h3 className="text-2xl font-bold mb-6 text-text-primary-light dark:text-text-primary-dark">Connect with Me</h3>
             <div className="flex justify-center space-x-6">
               <a
-                href="https://github.com"
+                href="https://github.com/Shaleen1312"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-12 h-12 bg-surface-light dark:bg-surface-dark rounded-full flex items-center justify-center text-text-secondary-light dark:text-text-secondary-dark hover:bg-secondary-light dark:hover:bg-secondary-dark hover:text-white transition-all duration-300 shadow-md hover:shadow-lg"
+                aria-label="Visit my GitHub profile"
               >
                 <FaGithub className="w-6 h-6" />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/feed/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-12 h-12 bg-surface-light dark:bg-surface-dark rounded-full flex items-center justify-center text-text-secondary-light dark:text-text-secondary-dark hover:bg-secondary-light dark:hover:bg-secondary-dark hover:text-white transition-all duration-300 shadow-md hover:shadow-lg"
+                aria-label="Visit my LinkedIn profile"
               >
                 <FaLinkedin className="w-6 h-6" />
               </a>
