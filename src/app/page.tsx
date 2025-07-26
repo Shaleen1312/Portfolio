@@ -39,7 +39,7 @@ const projects: Project[] = [
   {
     title: "Mini e-auction Portal",
     description: "A portal for users to take a bid for electronic items and which users take the highest bid can buy that item.",
-    tech: ["HTML", "CSS", "JavaScript"],
+    tech: ["React", "CSS", "JavaScript"],
     role: "Full Stack Developer",
     image: "/project4.jpg"
   }
