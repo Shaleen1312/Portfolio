@@ -2,6 +2,7 @@ import './globals.css'
 import { Inter, Poppins } from 'next/font/google'
 import type { Metadata } from 'next'
 import { ThemeProvider } from '@/context/ThemeContext'
+import Footer from '@/components/Footer'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -28,9 +29,10 @@ export default function RootLayout({
     <html lang="en" className={`${inter.className} ${poppins.className}`} suppressHydrationWarning>
       <body className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors">
         <ThemeProvider>
-          <main className="min-h-screen">
+          <div className="min-h-screen pb-20">
             {children}
-          </main>
+          </div>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

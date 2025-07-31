@@ -5,7 +5,7 @@
 @layer base {
   body {
     @apply antialiased bg-background-light dark:bg-background-dark text-text-primary-light dark:text-text-primary-dark;
-  }
+}
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold text-text-primary-light dark:text-text-primary-dark;
@@ -31,7 +31,7 @@
 
   .button {
     @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105;
-  }
+}
 
   .button-primary {
     @apply button bg-secondary-light dark:bg-secondary-dark text-white hover:opacity-90;

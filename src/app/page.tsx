@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa'
@@ -14,7 +15,12 @@ type Project = {
   image: string
 }
 
-const projects: Project[] = [
+type Skill = {
+  category: string;
+  items: string[];
+};
+
+const defaultProjects: Project[] = [
   {
     title: "Ecommerce Electronic Shop",
     description: "A frontend website for online electronic sales, handling browsing and cart management.",
@@ -43,9 +49,9 @@ const projects: Project[] = [
     role: "Full Stack Developer",
     image: "/project4.jpg"
   }
-]
+];
 
-const skills = [
+const defaultSkills: Skill[] = [
   {
     category: "Programming",
     items: ["HTML", "CSS", "JavaScript", "C++", "Java", "SQL"]
@@ -62,7 +68,7 @@ const skills = [
     category: "Soft Skills",
     items: ["Time Management", "Leadership", "Communication", "Problem Solving"]
   }
-]
+];
 
 const contactInfo = [
   {
@@ -124,8 +130,37 @@ function ProjectCard({ project, index }: { project: Project, index: number }) {
 }
 
 export default function Home() {
+  const [projects, setProjects] = useState<Project[]>(defaultProjects);
+  const [skills, setSkills] = useState<Skill[]>(defaultSkills);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      let loadedProjects = defaultProjects;
+      let loadedSkills = defaultSkills;
+      try {
+        const storedProjects = localStorage.getItem('admin_projects');
+        if (storedProjects) {
+          loadedProjects = JSON.parse(storedProjects);
+        }
+      } catch (e) {
+        console.error('Error loading projects from localStorage:', e);
+      }
+      try {
+        const storedSkills = localStorage.getItem('admin_skills');
+        if (storedSkills) {
+          loadedSkills = JSON.parse(storedSkills);
+        }
+      } catch (e) {
+        console.error('Error loading skills from localStorage:', e);
+      }
+      setProjects(Array.isArray(loadedProjects) && loadedProjects.length > 0 ? loadedProjects : defaultProjects);
+      setSkills(Array.isArray(loadedSkills) && loadedSkills.length > 0 ? loadedSkills : defaultSkills);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen">
+      <div className="bg-red-100 text-red-800 p-4 text-center font-bold">TEST: Home component is rendering</div>
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-surface-light/80 dark:bg-surface-dark/80 backdrop-blur-sm z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -136,6 +171,7 @@ export default function Home() {
               <a href="#projects" className="nav-link">Projects</a>
               <a href="#skills" className="nav-link">Skills</a>
               <a href="#contact" className="nav-link">Contact</a>
+              <a href="/admin" className="nav-link">Admin</a>
               <ThemeToggle />
             </div>
             <div className="sm:hidden flex items-center space-x-2">
@@ -236,7 +272,7 @@ export default function Home() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
+            {projects.length === 0 ? <p className="text-center text-gray-500">No projects to display.</p> : projects.map((project, index) => (
               <ProjectCard key={project.title} project={project} index={index} />
             ))}
           </div>
@@ -263,7 +299,7 @@ export default function Home() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {skills.map((skillGroup, groupIndex) => (
+            {skills.length === 0 ? <p className="text-center text-gray-500">No skills to display.</p> : skills.map((skillGroup, groupIndex) => (
               <motion.div
                 key={skillGroup.category}
                 initial={{ opacity: 0, y: 20 }}
@@ -371,14 +407,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-8 bg-surface-light dark:bg-surface-dark">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
-            © {new Date().getFullYear()} Shaleen Chhabra. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      {/* Footer removed, now using global fixed Footer component */}
     </div>
   )
 }
