@@ -161,7 +161,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <div className="bg-red-100 text-red-800 p-4 text-center font-bold">TEST: Home component is rendering</div>
-      {/* Navigation */}
+      
       <nav className="fixed top-0 w-full bg-surface-light/80 dark:bg-surface-dark/80 backdrop-blur-sm z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -182,7 +182,7 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
+      
       <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -252,7 +252,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Projects Section */}
+      
       <section id="projects" className="py-20 bg-background-light dark:bg-background-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -279,7 +279,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Skills Section */}
+      
       <section id="skills" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -334,7 +334,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Contact Section */}
+      
       <section id="contact" className="py-20 bg-background-light dark:bg-background-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -407,7 +407,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer removed, now using global fixed Footer component */}
+      
     </div>
   )
 }

@@ -1,23 +1,21 @@
-'use client'
 
 
+"use client";
 import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ThemeToggle from '@/components/ThemeToggle';
 
 
+
 export default function AdminPage() {
-  // Simple admin login state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [adminUser, setAdminUser] = useState('');
   const [adminPass, setAdminPass] = useState('');
   const [loginError, setLoginError] = useState('');
 
-  // Simple login handler (replace with real auth in production)
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Hardcoded credentials (replace with env vars or backend in real app)
     if (adminUser === 'admin' && adminPass === 'admin123') {
       setIsLoggedIn(true);
       setLoginError('');
@@ -33,7 +31,6 @@ export default function AdminPage() {
     setLoginError('');
   };
 
-  // Project form state
   const [projects, setProjects] = useState<any[]>([]);
   const [projectTitle, setProjectTitle] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
@@ -41,24 +38,20 @@ export default function AdminPage() {
   const [projectRole, setProjectRole] = useState('');
   const [projectImage, setProjectImage] = useState('');
 
-  // Skill form state
   const [skills, setSkills] = useState<any[]>([]);
   const [skillCategory, setSkillCategory] = useState('');
   const [skillItems, setSkillItems] = useState('');
 
-  // Load from localStorage on mount
   useEffect(() => {
     const storedProjects = localStorage.getItem('admin_projects');
     if (storedProjects) setProjects(JSON.parse(storedProjects));
     const storedSkills = localStorage.getItem('admin_skills');
     if (storedSkills) setSkills(JSON.parse(storedSkills));
-    // Auto-login if already logged in (optional, can be removed)
     if (localStorage.getItem('admin_logged_in') === 'true') {
       setIsLoggedIn(true);
     }
   }, []);
 
-  // Save to localStorage on change
   useEffect(() => {
     localStorage.setItem('admin_projects', JSON.stringify(projects));
   }, [projects]);
@@ -66,7 +59,6 @@ export default function AdminPage() {
     localStorage.setItem('admin_skills', JSON.stringify(skills));
   }, [skills]);
 
-  // Save login state
   useEffect(() => {
     if (isLoggedIn) {
       localStorage.setItem('admin_logged_in', 'true');
@@ -114,6 +106,9 @@ export default function AdminPage() {
       <div className="min-h-[70vh] flex flex-col items-center justify-center pb-20 pt-4">
         {!isLoggedIn ? (
           <form onSubmit={handleLogin} className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 w-full max-w-sm flex flex-col gap-4">
+            <div className="flex justify-center mb-2">
+              <img src="/profile.jpg" alt="Admin" className="w-24 h-24 object-cover rounded-full border-2 border-gray-300 dark:border-gray-700" />
+            </div>
             <h2 className="text-2xl font-bold mb-2 text-center">Admin Login</h2>
             <input
               type="text"
@@ -136,6 +131,9 @@ export default function AdminPage() {
           </form>
         ) : (
           <div className="w-full max-w-2xl mx-auto py-12 px-4">
+            <div className="flex justify-center mb-6">
+              <img src="/profile.jpg" alt="Admin" className="w-28 h-28 object-cover rounded-full border-2 border-gray-300 dark:border-gray-700" />
+            </div>
             <div className="flex justify-between items-center mb-8">
               <h1 className="text-3xl font-bold">Admin Panel</h1>
               <button onClick={handleLogout} className="text-sm px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600">Logout</button>
