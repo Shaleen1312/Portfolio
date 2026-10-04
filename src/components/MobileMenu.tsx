@@ -6,6 +6,8 @@ import { FaBars, FaTimes } from 'react-icons/fa'
 
 const menuItems = [
   { href: '#about', label: 'About' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#achievements', label: 'Achievements' },
   { href: '#projects', label: 'Projects' },
   { href: '#skills', label: 'Skills' },
   { href: '#contact', label: 'Contact' },

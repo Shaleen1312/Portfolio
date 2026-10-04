@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaTrophy } from 'react-icons/fa'
 import MobileMenu from '@/components/MobileMenu'
 import ThemeToggle from '@/components/ThemeToggle'
 
@@ -13,6 +13,7 @@ type Project = {
   tech: string[]
   role: string
   image: string
+  link?: string
 }
 
 type Skill = {
@@ -20,7 +21,47 @@ type Skill = {
   items: string[];
 };
 
+type ExperienceItem = {
+  role: string
+  company: string
+  duration: string
+  description: string
+}
+
+const experience: ExperienceItem[] = [
+  {
+    role: "AI & Automation Engineer",
+    company: "Scoreme Solutions Pvt Limited",
+    duration: "Present",
+    description: "Building agentic AI systems and automation pipelines, working across AI-driven product features and full-stack engineering."
+  }
+];
+
+type Achievement = {
+  title: string
+  description: string
+}
+
+const achievements: Achievement[] = [
+  {
+    title: "Global Fintech Fest (GFF) 2026",
+    description: "Represented Resurgent India at GFF 2026, showcasing the agentic credit-intelligence platform to banking and fintech industry leaders."
+  },
+  {
+    title: "Public Launch — resurgentindia.ai",
+    description: "Led the public launch of the platform as resurgentindia.ai, taking it from an internal tool to a live, client-facing commercial product."
+  }
+];
+
 const defaultProjects: Project[] = [
+  {
+    title: "Atlas — Agentic Credit-Intelligence Platform",
+    description: "A live commercial SaaS product powering resurgentindia.ai. AI agents turn a company's CIN into bank-ready credit deliverables — forensic audits, CMA workbooks, board notes, TEV studies, valuations, and AML/PEP screening — in minutes instead of weeks.",
+    tech: ["React", "TypeScript", "AI Agents", "AWS"],
+    role: "Core Engineer",
+    image: "/project5.svg",
+    link: "https://github.com/shaleen2004/atlas-agentic-credit-intelligence"
+  },
   {
     title: "Ecommerce Electronic Shop",
     description: "A frontend website for online electronic sales, handling browsing and cart management.",
@@ -34,13 +75,6 @@ const defaultProjects: Project[] = [
     tech: ["HTML", "CSS", "JavaScript", "PHP"],
     role: "UI Designer",
     image: "/project2.jpg"
-  },
-  {
-    title: "Ecommerce Shoe Website",
-    description: "A frontend website for online shoe sales, handling browsing and cart management.",
-    tech: ["HTML", "CSS", "JavaScript"],
-    role: "Frontend Developer",
-    image: "/project3.jpg"
   },
   {
     title: "Mini e-auction Portal",
@@ -116,15 +150,22 @@ function ProjectCard({ project, index }: { project: Project, index: number }) {
       <p className="text-text-secondary-light dark:text-text-secondary-dark mb-4">{project.description}</p>
       <div className="flex flex-wrap gap-2 mb-4">
         {project.tech.map(tech => (
-          <span
-            key={tech}
-            className="px-3 py-1 text-sm bg-background-light dark:bg-background-dark text-text-secondary-light dark:text-text-secondary-dark rounded-full"
-          >
+          <span key={tech} className="tech-chip">
             {tech}
           </span>
         ))}
       </div>
-      <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">Role: {project.role}</p>
+      <p className="font-mono text-sm text-text-secondary-light dark:text-text-secondary-dark mb-2">// {project.role}</p>
+      {project.link && (
+        <a
+          href={project.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-sm font-mono font-medium text-secondary-light dark:text-secondary-dark hover:underline"
+        >
+          View Repository →
+        </a>
+      )}
     </motion.div>
   )
 }
@@ -159,15 +200,17 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen">
-      <div className="bg-red-100 text-red-800 p-4 text-center font-bold">TEST: Home component is rendering</div>
-      
-      <nav className="fixed top-0 w-full bg-surface-light/80 dark:bg-surface-dark/80 backdrop-blur-sm z-50 shadow-sm">
+    <div className="min-h-screen bg-grid">
+      <nav className="fixed top-0 w-full bg-surface-light/80 dark:bg-surface-dark/80 backdrop-blur-md z-50 border-b border-border-light dark:border-border-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <span className="text-xl font-bold text-primary-light dark:text-primary-dark">SC</span>
+            <span className="text-xl font-mono font-bold text-secondary-light dark:text-secondary-dark">
+              &lt;SC<span className="text-text-primary-light dark:text-text-primary-dark">/</span>&gt;
+            </span>
             <div className="hidden sm:flex items-center space-x-4">
               <a href="#about" className="nav-link">About</a>
+              <a href="#experience" className="nav-link">Experience</a>
+              <a href="#achievements" className="nav-link">Achievements</a>
               <a href="#projects" className="nav-link">Projects</a>
               <a href="#skills" className="nav-link">Skills</a>
               <a href="#contact" className="nav-link">Contact</a>
@@ -183,7 +226,7 @@ export default function Home() {
       </nav>
 
       
-      <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
+      <section id="about" className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -191,24 +234,32 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
+              <div className="status-badge mb-6">
+                <span className="status-dot" />
+                Available for opportunities
+              </div>
+              <p className="font-mono text-sm text-secondary-light dark:text-secondary-dark mb-3">
+                $ whoami
+              </p>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
                 Hi, I'm{' '}
                 <span className="gradient-text">Shaleen Chhabra</span>
               </h1>
               <h2 className="text-2xl sm:text-3xl text-text-secondary-light dark:text-text-secondary-dark mb-8">
-                Software Developer
+                AI &amp; Automation Engineer
               </h2>
               <p className="text-lg text-text-secondary-light dark:text-text-secondary-dark mb-8 max-w-2xl">
-                A results-driven Computer Engineering student with strong proficiency in Java,
-                Data Structures & Algorithms, and OOPS concepts. Experienced in developing
-                web-based applications and solving real-world problems.
+                Currently building AI-driven automation at Scoreme Solutions Pvt Limited.
+                I work on agentic AI systems and web applications, with hands-on experience
+                shipping real production tools, from automation pipelines to full-stack
+                platforms used by real users.
               </p>
               <div className="flex space-x-4">
                 <a href="#contact" className="button-primary">Get in Touch</a>
                 <a href="#projects" className="button-outline">View Projects</a>
               </div>
               <div className="flex space-x-6 mt-8">
-                <a href="https://github.com/Shaleen1312" 
+                <a href="https://github.com/shaleen2004"
                    target="_blank" 
                    rel="noopener noreferrer" 
                    className="text-text-secondary-light dark:text-text-secondary-dark hover:text-secondary-light dark:hover:text-secondary-dark transition-colors"
@@ -252,7 +303,83 @@ export default function Home() {
         </div>
       </section>
 
-      
+
+      <section id="experience" className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <p className="mono-label mb-3">~/experience</p>
+            <h2 className="text-3xl sm:text-4xl font-bold">
+              Work <span className="gradient-text">Experience</span>
+            </h2>
+          </motion.div>
+
+          <div className="max-w-2xl mx-auto space-y-10 relative border-l border-border-light dark:border-border-dark pl-8">
+            {experience.map((item, index) => (
+              <motion.div
+                key={item.company}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="relative"
+              >
+                <span className="absolute -left-[2.5rem] top-1.5 w-3 h-3 rounded-full bg-secondary-light dark:bg-secondary-dark ring-4 ring-background-light dark:ring-background-dark" />
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-2">
+                  <h3 className="text-xl font-bold">{item.role}</h3>
+                  <span className="font-mono text-xs px-2 py-1 rounded-md bg-secondary-light/10 dark:bg-secondary-dark/10 text-secondary-light dark:text-secondary-dark w-fit">{item.duration}</span>
+                </div>
+                <p className="text-text-secondary-light dark:text-text-secondary-dark font-medium mb-2">{item.company}</p>
+                <p className="text-text-secondary-light dark:text-text-secondary-dark">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+      <section id="achievements" className="py-20 bg-background-light dark:bg-background-dark">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <p className="mono-label mb-3">~/achievements</p>
+            <h2 className="text-3xl sm:text-4xl font-bold">
+              Key <span className="gradient-text">Achievements</span>
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {achievements.map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="card"
+              >
+                <div className="w-10 h-10 rounded-lg bg-secondary-light/10 dark:bg-secondary-dark/10 flex items-center justify-center text-secondary-light dark:text-secondary-dark mb-4">
+                  <FaTrophy className="w-5 h-5" />
+                </div>
+                <h3 className="text-lg font-bold mb-2">{item.title}</h3>
+                <p className="text-text-secondary-light dark:text-text-secondary-dark">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
       <section id="projects" className="py-20 bg-background-light dark:bg-background-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -262,6 +389,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
+            <p className="mono-label mb-3">~/projects</p>
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
               Featured <span className="gradient-text">Projects</span>
             </h2>
@@ -289,10 +417,11 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
+            <p className="mono-label mb-3">~/skills</p>
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
               My <span className="gradient-text">Skills</span>
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-text-secondary-light dark:text-text-secondary-dark max-w-2xl mx-auto">
               I've developed a diverse set of skills throughout my journey as a software developer.
               Here's a comprehensive overview of my technical and soft skills.
             </p>
@@ -308,7 +437,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="card"
               >
-                <h3 className="text-xl font-bold mb-4 text-primary">
+                <h3 className="text-sm font-mono uppercase tracking-wide mb-4 text-secondary-light dark:text-secondary-dark">
                   {skillGroup.category}
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -322,7 +451,7 @@ export default function Home() {
                         delay: (groupIndex * skillGroup.items.length + index) * 0.05
                       }}
                       viewport={{ once: true }}
-                      className="px-3 py-1 bg-gradient-to-r from-secondary/10 to-accent/10 text-secondary rounded-full text-sm"
+                      className="tech-chip"
                     >
                       {skill}
                     </motion.span>
@@ -344,6 +473,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
+            <p className="mono-label mb-3">~/contact</p>
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
               Get in <span className="gradient-text">Touch</span>
             </h2>
@@ -385,10 +515,10 @@ export default function Home() {
             <h3 className="text-2xl font-bold mb-6 text-text-primary-light dark:text-text-primary-dark">Connect with Me</h3>
             <div className="flex justify-center space-x-6">
               <a
-                href="https://github.com/Shaleen1312"
+                href="https://github.com/shaleen2004"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 bg-surface-light dark:bg-surface-dark rounded-full flex items-center justify-center text-text-secondary-light dark:text-text-secondary-dark hover:bg-secondary-light dark:hover:bg-secondary-dark hover:text-white transition-all duration-300 shadow-md hover:shadow-lg"
+                className="w-12 h-12 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-full flex items-center justify-center text-text-secondary-light dark:text-text-secondary-dark hover:bg-secondary-light dark:hover:bg-secondary-dark hover:text-white dark:hover:text-background-dark hover:border-secondary-light dark:hover:border-secondary-dark transition-all duration-300"
                 aria-label="Visit my GitHub profile"
               >
                 <FaGithub className="w-6 h-6" />
@@ -397,7 +527,7 @@ export default function Home() {
                 href="https://www.linkedin.com/feed/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 bg-surface-light dark:bg-surface-dark rounded-full flex items-center justify-center text-text-secondary-light dark:text-text-secondary-dark hover:bg-secondary-light dark:hover:bg-secondary-dark hover:text-white transition-all duration-300 shadow-md hover:shadow-lg"
+                className="w-12 h-12 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-full flex items-center justify-center text-text-secondary-light dark:text-text-secondary-dark hover:bg-secondary-light dark:hover:bg-secondary-dark hover:text-white dark:hover:text-background-dark hover:border-secondary-light dark:hover:border-secondary-dark transition-all duration-300"
                 aria-label="Visit my LinkedIn profile"
               >
                 <FaLinkedin className="w-6 h-6" />
