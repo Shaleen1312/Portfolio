@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaTrophy } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaTrophy, FaDownload } from 'react-icons/fa'
 import MobileMenu from '@/components/MobileMenu'
 import ThemeToggle from '@/components/ThemeToggle'
 
@@ -45,11 +45,11 @@ type Achievement = {
 const achievements: Achievement[] = [
   {
     title: "Global Fintech Fest (GFF) 2026",
-    description: "Represented Resurgent India at GFF 2026, showcasing the agentic credit-intelligence platform to banking and fintech industry leaders."
+    description: "Represented Scoreme Solutions at GFF 2026, showcasing the agentic credit-intelligence platform to banking and fintech industry leaders."
   },
   {
-    title: "Public Launch — resurgentindia.ai",
-    description: "Led the public launch of the platform as resurgentindia.ai, taking it from an internal tool to a live, client-facing commercial product."
+    title: "Public Launch — scoreme.ai",
+    description: "Led the public launch of the platform as scoreme.ai, taking it from an internal tool to a live, client-facing commercial product."
   }
 ];
 
@@ -114,8 +114,8 @@ const contactInfo = [
   {
     icon: <FaEnvelope className="w-6 h-6" />,
     label: "Email",
-    value: "schhabra50_be23@thapar.edu",
-    href: "mailto:schhabra50_be23@thapar.edu"
+    value: "shaleen1312@gmail.com",
+    href: "mailto:shaleen1312@gmail.com"
   },
   {
     icon: <FaMapMarkerAlt className="w-6 h-6" />,
@@ -254,9 +254,17 @@ export default function Home() {
                 shipping real production tools, from automation pipelines to full-stack
                 platforms used by real users.
               </p>
-              <div className="flex space-x-4">
+              <div className="flex flex-wrap gap-4">
                 <a href="#contact" className="button-primary">Get in Touch</a>
                 <a href="#projects" className="button-outline">View Projects</a>
+                <a
+                  href="/api/resume"
+                  download="Shaleen_Chhabra_Resume.pdf"
+                  className="button-outline inline-flex items-center gap-2"
+                >
+                  <FaDownload className="w-4 h-4" />
+                  Resume
+                </a>
               </div>
               <div className="flex space-x-6 mt-8">
                 <a href="https://github.com/shaleen2004"
@@ -275,7 +283,7 @@ export default function Home() {
                 >
                   <FaLinkedin className="w-6 h-6" />
                 </a>
-                <a href="mailto:schhabra50_be23@thapar.edu"
+                <a href="mailto:shaleen1312@gmail.com"
                    className="text-text-secondary-light dark:text-text-secondary-dark hover:text-secondary-light dark:hover:text-secondary-dark transition-colors">
                   <FaEnvelope className="w-6 h-6" />
                 </a>

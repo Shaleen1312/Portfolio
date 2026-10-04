@@ -42,6 +42,11 @@ export default function AdminPage() {
   const [skillCategory, setSkillCategory] = useState('');
   const [skillItems, setSkillItems] = useState('');
 
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
+  const [resumeKey, setResumeKey] = useState('');
+  const [resumeUploading, setResumeUploading] = useState(false);
+  const [resumeMessage, setResumeMessage] = useState('');
+
   useEffect(() => {
     const storedProjects = localStorage.getItem('admin_projects');
     if (storedProjects) setProjects(JSON.parse(storedProjects));
@@ -97,6 +102,37 @@ export default function AdminPage() {
     ]);
     setSkillCategory('');
     setSkillItems('');
+  }
+
+  async function handleResumeUpload(e: React.FormEvent) {
+    e.preventDefault();
+    if (!resumeFile || !resumeKey) return;
+
+    setResumeUploading(true);
+    setResumeMessage('');
+
+    try {
+      const formData = new FormData();
+      formData.append('resume', resumeFile);
+
+      const res = await fetch('/api/resume', {
+        method: 'POST',
+        headers: { 'x-admin-key': resumeKey },
+        body: formData,
+      });
+
+      if (res.ok) {
+        setResumeMessage('Resume updated successfully.');
+        setResumeFile(null);
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setResumeMessage(data.error || 'Upload failed. Please try again.');
+      }
+    } catch {
+      setResumeMessage('Upload failed. Please try again.');
+    } finally {
+      setResumeUploading(false);
+    }
   }
 
   return (
@@ -172,6 +208,32 @@ export default function AdminPage() {
                   ))}
                 </ul>
               </div>
+            </section>
+            <section className="mt-12">
+              <h2 className="text-xl font-semibold mb-4">Update Resume</h2>
+              <form onSubmit={handleResumeUpload} className="space-y-4">
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  onChange={e => setResumeFile(e.target.files?.[0] ?? null)}
+                  required
+                  className="w-full p-2 border rounded dark:text-white dark:bg-gray-900 dark:placeholder-gray-400"
+                />
+                <input
+                  type="password"
+                  value={resumeKey}
+                  onChange={e => setResumeKey(e.target.value)}
+                  placeholder="Admin upload key"
+                  required
+                  className="w-full p-2 border rounded dark:text-white dark:bg-gray-900 dark:placeholder-gray-400"
+                />
+                <button type="submit" disabled={resumeUploading} className="button-primary disabled:opacity-50">
+                  {resumeUploading ? 'Uploading...' : 'Upload Resume'}
+                </button>
+              </form>
+              {resumeMessage && (
+                <p className="mt-3 text-sm text-text-secondary-light dark:text-text-secondary-dark">{resumeMessage}</p>
+              )}
             </section>
           </div>
         )}
